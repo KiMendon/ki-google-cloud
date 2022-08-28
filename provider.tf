@@ -1,19 +1,26 @@
 terraform {
   required_providers {
     google = {
-      source = "hashicorp/google"
+      source  = "hashicorp/google"
       version = "4.31.0"
     }
   }
 }
 
-provider "google" {
-  project = "playground-s-11-6e21b117"
-  region = "us-central1"
-  zone = "us-central1-a"
+# Using a single workspace:
+terraform {
+  backend "remote" {
+    hostname     = "app.terraform.io"
+    organization = "ki-gcp-cloud"
+
+    workspaces {
+      name = "ki-google-cloud"
+    }
+  }
 }
 
-module "project-factory" {
-  source  = "terraform-google-modules/project-factory/google"
-  version = "13.1.0"
+provider "google" {
+  project = "playground-s-11-a5f9ab85"
+  region  = "us-central1"
+  zone    = "us-central1-a"
 }
